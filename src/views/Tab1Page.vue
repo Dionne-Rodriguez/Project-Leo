@@ -23,7 +23,8 @@
         </ion-card-header>
 
         <ion-card-content>
-        <ion-card-subtitle>height: {{height}}</ion-card-subtitle>
+          <!-- <ion-card-subtitle>bpm: {{ healthData.bpm }}</ion-card-subtitle> -->
+          <ion-card-subtitle>steps: {{ data.steps }}</ion-card-subtitle>
         </ion-card-content>
       </ion-card>
     </ion-content>
@@ -31,52 +32,69 @@
 </template>
 
 <script lang="ts">
-import { HealthKit } from '@awesome-cordova-plugins/health-kit'
-import { defineComponent, onMounted, computed } from 'vue';
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonCard } from '@ionic/vue';
-import ExploreContainer from '@/components/ExploreContainer.vue';
+import { HealthKit } from "@awesome-cordova-plugins/health-kit";
+import { defineComponent, onMounted, computed, reactive } from "vue";
+import {
+  IonPage,
+  IonHeader,
+  IonToolbar,
+  IonTitle,
+  IonContent,
+  IonCard,
+} from "@ionic/vue";
+import ExploreContainer from "@/components/ExploreContainer.vue";
+// import { store } from "../helper.js";
 
-export default  defineComponent({
-  name: 'Tab1Page',
-  components: { ExploreContainer, IonHeader, IonToolbar, IonTitle, IonContent, IonPage, IonCard },
-  setup() {
-const healthKit = HealthKit
-var height = "no data"
-// const isAuthorized
+export default defineComponent({
+  name: "Tab1Page",
+  components: {
+    ExploreContainer,
+    IonHeader,
+    IonToolbar,
+    IonTitle,
+    IonContent,
+    IonPage,
+    IonCard,
+  },
+   setup() {
+    const options = {
+      readTypes: ["HKQuantityTypeIdentifierHeight"],
+      writeTypes: [],
+    };
 
+      var data = reactive({})
 
-// function available () {
-//  return healthKit.available()
-// }
+     async function loadHealthData() {
 
-// function requestAuthorization () {
-//   const returnedValue = healthKit.requestAuthorization({requestReadPermission: true});
-//   console.log(returnedValue)
-//  return returnedValue
-// }
+      const step = await HealthKit.sumQuantityType({
+        startDate: new Date(new Date().getTime() - 24 * 60 * 60 * 1000), // three days ago
+        endDate: new Date(), // now
+        sampleType: "HKQuantityTypeIdentifierStepCount", // any HKQuantityType
+        unit: "count", // make sure this is compatible with the sampleType
+      }).then((val) => {
+        return val;
+      });
 
-const options = {
-  readTypes:['HKQuantityTypeIdentifierHeight', 'HKQuantityTypeIdentifierWeight'],
-  writeTypes:['HKQuantityTypeIdentifierHeight', 'HKQuantityTypeIdentifierWeight']
-}
+      return { step};
+    }
 
-  function loadHealthData() {
-   healthKit.readHeight({unit: "ft"}).then(val => {
-     height = val.value
-   })
-  }
-onMounted(() => {
-return healthKit.available().then(available => {
-if(available){
-  healthKit.requestAuthorization(options).then(_ => {
-    loadHealthData()
-  })
-}else{
-  console.log("Apple Health Kit not available on this device")
-}
-})
-});
-return {height}
+    (async () => {
+      await HealthKit.available().then(async(available) => {
+        if (available) {
+         await HealthKit.requestAuthorization(options).then(async(_) => {
+           console.log(await loadHealthData(), "final")            
+
+            console.log("successfully requested authorization");
+          });
+        } else {
+          console.log("Apple Health Kit not available on this device");
+        }
+      });
+    })();
+
+console.log(data, "final??????");
+
+    return {data};
   },
 });
 </script>
