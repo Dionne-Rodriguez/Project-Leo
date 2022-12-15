@@ -8,12 +8,12 @@
     </ion-page>
     </template>
     <style lang="scss" >
-        .ion-page{
-          background: url('../images/image1.png') no-repeat center center / cover;
-          &::part(background) {
-            background: url('../images/image1.png') no-repeat center center / cover;
-        }
-      }
+        // .ion-page{
+        //   background: url('../images/image1.png') no-repeat center center / cover;
+        //   &::part(background) {
+        //     background: url('../images/image1.png') no-repeat center center / cover;
+        // }
+    //   }
         
   </style> 
     <script lang="js">

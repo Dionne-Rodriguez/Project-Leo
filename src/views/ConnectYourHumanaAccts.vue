@@ -9,9 +9,9 @@
   </template>
   <style lang="scss" >
       .ion-page{
-        background: url('../images/image2.png') no-repeat center center / cover;
+        background: url('../images/hack2022-onboarding-2.png') no-repeat center center / cover;
         &::part(background) {
-          background: url('../images/image2.png') no-repeat center center / cover;
+          background: url('../images/hack2022-onboarding-2.png') no-repeat center center / cover;
       }
     }
       
