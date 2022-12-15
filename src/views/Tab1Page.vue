@@ -1,30 +1,82 @@
 <template>
   <ion-page>
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>Tab 1</ion-title>
-      </ion-toolbar>
-    </ion-header>
     <ion-content :fullscreen="true">
-      <ion-header collapse="condense">
+      <ion-header>
         <ion-toolbar>
-          <ion-title size="large">Tab 1</ion-title>
+          <ion-title
+            style="font-size: 34px; color: #5c9a1b; padding-bottom: 16px;"
+            >Home</ion-title
+          >
+          
         </ion-toolbar>
       </ion-header>
+      <NotificationsView />
 
-      <ExploreContainer name="Health Kit Dashboard" />
-
-      <!-- <ion-button @onclick="available">check health kit availability</ion-button>
-      <ion-button @onclick="requestAuthorization">request permission</ion-button> -->
+      <ion-text>
+        <h2
+          style="
+            border-bottom: 1px solid grey;
+            color: #114a21;
+            padding-left: 10px;
+            padding-bottom: 5px;
+          "
+        >
+          My Priorities
+        </h2>
+      </ion-text>
+      <ion-card>
+        <ion-card-content>
+          <ion-grid>
+            <ion-row class="ion-align-items-center">
+              <ion-col size="auto">
+                <img name="heart" src="./../assets/heart.png" />
+              </ion-col>
+              <ion-col>
+                <ion-card-title style="color: black; font-size: 24px"
+                  >Active Heart Rate</ion-card-title
+                >
+                <ion-row> {{ bpm }} bpm </ion-row>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card-content>
+      </ion-card>
 
       <ion-card>
-        <ion-card-header>
-          <ion-card-title>Health info</ion-card-title>
-        </ion-card-header>
-
         <ion-card-content>
-          <!-- <ion-card-subtitle>bpm: {{ healthData.bpm }}</ion-card-subtitle> -->
-          <ion-card-subtitle>steps: {{ data.steps }}</ion-card-subtitle>
+          <ion-grid>
+            <ion-row class="ion-align-items-center">
+              <ion-col size="auto">
+                <img name="lung" src="./../assets/lung.png" />
+              </ion-col>
+
+              <ion-col>
+                <ion-card-title style="color: black; font-size: 24px"
+                  >Oxygen Saturation</ion-card-title
+                >
+                <ion-row>{{ oxygenSaturation }} sat</ion-row>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card>
+        <ion-card-content>
+          <ion-grid>
+            <ion-row class="ion-align-items-center">
+              <ion-col size="auto">
+                <img name="jog" src="./../assets/jog.png" />
+              </ion-col>
+
+              <ion-col>
+                <ion-card-title style="color: black; font-size: 24px"
+                  >Daily Steps</ion-card-title
+                >
+                <ion-row>{{ steps }} steps</ion-row>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
         </ion-card-content>
       </ion-card>
     </ion-content>
@@ -32,69 +84,143 @@
 </template>
 
 <script lang="ts">
+import NotificationsView from "@/components/NotificationsView.vue";
 import { HealthKit } from "@awesome-cordova-plugins/health-kit";
-import { defineComponent, onMounted, computed, reactive } from "vue";
+import { defineComponent, ref, onMounted } from "vue";
 import {
   IonPage,
-  IonHeader,
-  IonToolbar,
-  IonTitle,
   IonContent,
   IonCard,
+  IonCol,
+  IonGrid,
+  IonRow,
+  IonToolbar,
+  IonText,
+  IonHeader,
+  IonTitle,
 } from "@ionic/vue";
-import ExploreContainer from "@/components/ExploreContainer.vue";
-// import { store } from "../helper.js";
 
 export default defineComponent({
   name: "Tab1Page",
   components: {
-    ExploreContainer,
-    IonHeader,
-    IonToolbar,
-    IonTitle,
+    NotificationsView,
     IonContent,
     IonPage,
     IonCard,
+    IonCol,
+    IonGrid,
+    IonRow,
+    IonToolbar,
+    IonText,
+    IonHeader,
+    IonTitle,
   },
-   setup() {
+  setup() {
+    const bpm = ref(0);
+    const steps = ref(0);
+    const oxygenSaturation = ref("");
+    const healthKit = HealthKit;
     const options = {
-      readTypes: ["HKQuantityTypeIdentifierHeight"],
+      readTypes: [
+        "HKQuantityTypeIdentifierStepCount",
+        "HKQuantityTypeIdentifierHeartRate",
+        "HKQuantityTypeIdentifierOxygenSaturation",
+      ],
       writeTypes: [],
     };
 
-      var data = reactive({})
+    const checkHealthKit = async () => {
+      if (healthKit) {
+        const isAvailable = await healthKit.available();
+        if (isAvailable) {
+          console.log("available");
+          const isAuthorized = await healthKit.checkAuthStatus({
+            type: "HKQuantityTypeIdentifierHeartRate",
+          });
 
-     async function loadHealthData() {
+          if (isAuthorized == "denied") {
+            healthKit.requestAuthorization(options);
+          }
+          console.log("authorized", await isAuthorized);
+          return true;
+        }
+      }
+    };
 
-      const step = await HealthKit.sumQuantityType({
-        startDate: new Date(new Date().getTime() - 24 * 60 * 60 * 1000), // three days ago
-        endDate: new Date(), // now
-        sampleType: "HKQuantityTypeIdentifierStepCount", // any HKQuantityType
-        unit: "count", // make sure this is compatible with the sampleType
-      }).then((val) => {
-        return val;
-      });
+    const getSteps = async () => {
+      const isReady = await checkHealthKit();
+      if (isReady) {
+        healthKit
+          .sumQuantityType({
+            startDate: new Date(new Date().getTime() - 24 * 60 * 60 * 1000), // three days ago
+            endDate: new Date(), // now
+            sampleType: "HKQuantityTypeIdentifierStepCount", // any HKQuantityType
+            unit: "count", // make sure this is compatible with the sampleType
+          })
+          .then((data) => {
+            steps.value = data;
+          });
+      }
+    };
 
-      return { step};
+    const getOxygenSaturation = async () => {
+      const isReady = await checkHealthKit();
+      if (isReady) {
+        healthKit
+          .querySampleType({
+            startDate: new Date(new Date().getTime() - 24 * 60 * 60 * 1000), // three days ago
+            endDate: new Date(), // now
+            sampleType: "HKQuantityTypeIdentifierOxygenSaturation", // any HKQuantityType
+            unit: "percent", // make sure this is compatible with the sampleType
+          })
+          .then((data) => {
+            console.log(data, "response");
+
+            oxygenSaturation.value = formatAsPercent(data[0].quantity);
+          });
+      }
+    };
+
+    const getBPM = async () => {
+      const isReady = await checkHealthKit();
+      if (isReady) {
+        healthKit
+          .querySampleTypeAggregated({
+            startDate: new Date(new Date().getTime() - 24 * 60 * 60 * 1000), // three days ago
+            endDate: new Date(), // now
+            aggregation: "day",
+            sampleType: "HKQuantityTypeIdentifierHeartRate", // any HKQuantityType
+            unit: "count/min", // make sure this is compatible with the sampleType
+          })
+          .then((data) => {
+            console.log(data, "response");
+
+            bpm.value = Math.trunc(data[0].quantity);
+          });
+      }
+    };
+
+    function formatAsPercent(num: number) {
+      return num * 100 + "%";
     }
 
-    (async () => {
-      await HealthKit.available().then(async(available) => {
-        if (available) {
-         await HealthKit.requestAuthorization(options).then(async(_) => {
-           console.log(await loadHealthData(), "final")            
+    onMounted(() => {
+      console.log("mounted");
+      getSteps();
+      getBPM();
+      getOxygenSaturation();
+    });
 
-            console.log("successfully requested authorization");
-          });
-        } else {
-          console.log("Apple Health Kit not available on this device");
-        }
-      });
-    })();
+    console.log(bpm, "final??????");
 
-console.log(data, "final??????");
-
-    return {data};
+    return {
+      bpm,
+      getBPM,
+      steps,
+      getSteps,
+      oxygenSaturation,
+      getOxygenSaturation,
+    };
   },
 });
 </script>
