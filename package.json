@@ -3,6 +3,8 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
+    "dev-iphone": "ionic capacitor sync && ionic capacitor run ios --target E37E4880-DF7E-4D34-A1F0-B070A20805A8 --external",
+    "dev": "ionic capacitor sync && ionic capacitor run --external",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
@@ -22,6 +24,8 @@
     "com.telerik.plugins.healthkit": "^0.7.0",
     "core-js": "^3.6.5",
     "ionicons": "^6.0.3",
+    "sass": "^1.56.2",
+    "sass-loader": "^13.2.0",
     "vue": "^3.2.21",
     "vue-router": "^4.0.12"
   },
