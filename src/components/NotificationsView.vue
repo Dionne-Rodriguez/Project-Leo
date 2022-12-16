@@ -21,7 +21,7 @@
                       for monitoring your health
                     </ion-text>
                   </ion-row>
-                    <ion-button style="color:white; font-size:19px;" expand="block"> Set a goal</ion-button>
+                    <ion-button style="color:white; font-size:19px;" expand="block" router-link="/Goals/HealthGoals"> Set a goal</ion-button>
                 </ion-col>
               </ion-row>
             </ion-grid>

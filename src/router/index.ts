@@ -9,7 +9,7 @@ const routes: Array<RouteRecordRaw> = [
     component: TabsPage,
     children: [  {
       path: 'homePage',
-      component: () => import('@/views/HomePage.vue')
+      component: () => import('@/views/Tab1Page.vue')
     },]
   },
   {
@@ -79,7 +79,18 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('@/views/Events.vue')
       }
     ]
-  }
+  },
+  {
+  path: '/Events/',
+  component: TabsPage,
+  children:[
+    {
+      path: 'Events',
+      component: () => import('@/views/Events.vue')
+    },
+  ]
+}
+
 ]
 
 const router = createRouter({

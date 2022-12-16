@@ -2,7 +2,7 @@
     <ion-page class="imageBackground">
        <ion-grid > 
         <ion-row class="ion-justify-content-center">
-          <ion-button class="join-an-event" router-link="Rewards/Events">Continue -> </ion-button>
+          <ion-button class="join-an-event" router-link="/Rewards/Events">Continue -> </ion-button>
         </ion-row>
         <!-- <ion-row class="ion-justify-content-center"> 
           <ion-button>Walk more </ion-button>
