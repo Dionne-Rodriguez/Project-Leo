@@ -5,17 +5,12 @@ import TabsPage from '../views/TabsPage.vue'
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
-    redirect: 'home',
-    children: [
-      {
-        path: 'home1',
-        component: () => import('@/views/GettingStarted.vue')
-      },
-      {
-        path: 'home2',
-        component: () => import('@/views/Tab2Page.vue')
-      },
-    ]
+    redirect: '/GettingStarted/OnboardingOne',
+    component: TabsPage,
+    children: [  {
+      path: 'homePage',
+      component: () => import('@/views/HomePage.vue')
+    },]
   },
   {
     path: '/GettingStarted/',
@@ -49,21 +44,26 @@ const routes: Array<RouteRecordRaw> = [
     component: TabsPage,
     children:[
       {
-        path: 'goal1',
-        component: () => import('@/views/Tab3Page.vue')
+        path: 'HealthGoals',
+        component: () => import('@/views/HealthGoals.vue')
       },
       {
-        path: 'goal2',
-        component: () => import('@/views/GettingStarted.vue')
+        path: 'HowMuchDoYouWalk',
+        component: () => import('@/views/HowMuchDoYouWalk.vue')
       },
       {
-        path: 'goal3',
-        component: () => import('@/views/Tab2Page.vue')
+        path: 'WhatMotivatesYou',
+        component: () => import('@/views/WhatMotivatesYou.vue')
       },
       {
-        path: 'goal4',
-        component: () => import('@/views/Tab3Page.vue')
+        path: 'LetsStartYourHealthJourney',
+        component: () => import('@/views/LetsStartYourHealthJourney.vue')
       },
+      {
+        path: 'ActiveGoals',
+        component: () => import('@/views/ActiveGoals.vue')
+      },
+      
     ]
   },
   {
@@ -71,21 +71,13 @@ const routes: Array<RouteRecordRaw> = [
     component: TabsPage,
     children:[
       {
-        path: 'rewards1',
-        component: () => import('@/views/Tab3Page.vue')
+        path: 'Rewards',
+        component: () => import('@/views/MyRewards.vue')
       },
       {
-        path: 'rewards2',
-        component: () => import('@/views/GettingStarted.vue')
-      },
-      {
-        path: 'rewards3',
-        component: () => import('@/views/Tab2Page.vue')
-      },
-      {
-        path: 'rewards4',
-        component: () => import('@/views/Tab3Page.vue')
-      },
+        path: 'Events',
+        component: () => import('@/views/Events.vue')
+      }
     ]
   }
 ]

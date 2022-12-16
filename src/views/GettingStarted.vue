@@ -1,19 +1,18 @@
 <template>
   <ion-page class="imageBackground">
     <ion-grid >
-        <ion-button router-link="/GettingStarted/OnboardingTwo" class="bottom-button"
+        <ion-button fill="clear" color="clear" router-link="/GettingStarted/OnboardingTwo" class="bottom-button"
       expand>View All> </ion-button>
     </ion-grid>
   </ion-page>
   </template>
   <style lang="scss" >
-      .bottom-button{
+     .bottom-button{
         position: absolute;
         bottom: 50px;
         width: 91%;
         left: 20px;
-        // background-color: #5C9A1B;
-        color:white;
+        opacity:0%;
         border-radius: 10px;
       }
       .ion-page{

@@ -1,17 +1,24 @@
 <template>
-  <ion-page >
+  <ion-page class="imageBackground">
     <ion-grid >
-       <ion-row class="ion-justify-content-center">
-        <ion-button>View All</ion-button>
-       </ion-row>
+        <ion-button fill="clear" color="clear" router-link="/GettingStarted/OnboardingThree" class="bottom-button"
+      expand>View All> </ion-button>
     </ion-grid>
   </ion-page>
   </template>
   <style lang="scss" >
+     .bottom-button{
+        position: absolute;
+        bottom: 50px;
+        width: 91%;
+        left: 20px;
+        opacity:0%;
+        border-radius: 10px;
+      }
       .ion-page{
-        background: url('../images/hack2022-onboarding-2.png') no-repeat center center / cover;
+        background: url('../images/ConnectYourHumanaAcct.png') no-repeat center center / cover;
         &::part(background) {
-          background: url('../images/hack2022-onboarding-2.png') no-repeat center center / cover;
+          background: url('../images/ConnectYourHumanaAcct.png') no-repeat center center / cover;
       }
     }
       
@@ -21,7 +28,6 @@ import
 { IonPage, 
   IonButton,
   IonGrid,
-   IonRow 
  } 
      from '@ionic/vue';
 import { defineComponent, onMounted, computed} from 'vue';
@@ -31,29 +37,8 @@ export default  defineComponent({
  components: { 
   IonPage,
   IonButton,
-  // IonContent,
-  IonGrid, IonRow 
-  // ,IonImg
-  //  VueStepper
-  },
- setup(){
-
-  var steps = [
-    { label: 'step1' },
-    { label: 'step2' },
-    { label: 'step3' },
-    { label: 'step4' },
-    { label: 'step5' }]
-
-  onMounted(() => {
-    console.log("hi")
-  });
-
-  return {steps}
-  
- },
-  
- 
+  IonGrid,
+  }
   })
   </script>
   

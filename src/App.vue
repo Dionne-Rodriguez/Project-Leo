@@ -1,9 +1,13 @@
 <template>
   <ion-app>
-    <ion-router-outlet />
+    <ion-router-outlet mode="ios" />
   </ion-app>
 </template>
+<style>
+.ion-tab-bar{
 
+}
+</style>
 <script lang="ts">
 import { IonApp, IonRouterOutlet } from '@ionic/vue';
 import { defineComponent } from 'vue';

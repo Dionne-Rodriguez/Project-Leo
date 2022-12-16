@@ -2,7 +2,7 @@
   <ion-page class="imageBackground">
     <ion-grid >
       <ion-row class="ion-justify-content-center">
-        <ion-button fill="clear" color="clear" router-link="/Goals/HowMuchDoYouWalk" class="select-all">Select all</ion-button>
+        <ion-button fill="clear" color="clear" router-link="/Goals/HealthGoals" class="select-all">Select all</ion-button>
       </ion-row>
 
       <ion-row class="ion-justify-content-center">
@@ -27,8 +27,9 @@
   <style lang="scss" >
   .select-all{
     position: absolute;
-     top: 290px;
+     top: 190px;
      width: 91%;
+     height: 200px;
      left: 20px;
      opacity:0%;
   }
@@ -42,9 +43,9 @@
      border-radius: 10px;
    }
    .ion-page{
-     background: url('../images/WhatAreYourHealthGoals.png') no-repeat center center / cover;
+     background: url('../images/HomePage.png') no-repeat center center / cover;
      &::part(background) {
-       background: url('../images/WhatAreYourHealthGoals.png') no-repeat center center / cover;
+       background: url('../images/HomePage.png') no-repeat center center / cover;
    }
  }
    
