@@ -8,6 +8,13 @@
       <ion-row class="ion-justify-content-center">
         <ion-button  fill="clear" color="clear" router-link="/home1" class="bottom-button">Continue -> </ion-button>
       </ion-row>
+      <ion-row class="ion-justify-content-center">
+        <ion-button  fill="clear" color="clear" router-link="/homePage" class="home">Continue -> </ion-button>
+        <ion-button  fill="clear" color="clear" router-link="/Rewards/Rewards" class="rewards">Continue -> </ion-button>
+        <ion-button  fill="clear" color="clear" router-link="/Goals/ActiveGoals" class="goals">Continue -> </ion-button>
+        <ion-button  fill="clear" color="clear" router-link="/home1" class="my-doctors">Continue -> </ion-button>
+
+        </ion-row>
       <!-- <ion-row class="ion-justify-content-center"> 
         <ion-button>Walk more </ion-button>
       </ion-row>
@@ -32,7 +39,38 @@
      left: 20px;
      opacity:0%;
   }
-
+  .home{
+       position: absolute;
+       width:100px;
+       bottom: 30px;
+       left: 0px;
+       opacity:0%;
+       border-radius: 10px;
+     }
+     .rewards{
+       position: absolute;
+       width:100px;
+       bottom: 30px;
+       left: 100px;
+       opacity:0%;
+       border-radius: 10px;
+     }
+     .goals{
+       position: absolute;
+       width:100px;
+       bottom: 30px;
+       left: 200px;
+       opacity:0%;
+       border-radius: 10px;
+     }
+     .my-doctors{
+       position: absolute;
+       width:100px;
+       bottom: 30px;
+       left: 300px;
+       opacity:0%;
+       border-radius: 10px;
+     }
   .bottom-button{
      position: absolute;
      bottom: 50px;

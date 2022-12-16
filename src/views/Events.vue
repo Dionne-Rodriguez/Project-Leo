@@ -2,7 +2,7 @@
     <ion-page class="imageBackground">
       <ion-grid >
         <ion-row class="ion-justify-content-center">
-          <ion-button>Continue -> </ion-button>
+          <ion-button router-link="/Rewards/Rewards" class="join-an-event"> Continue -> </ion-button>
         </ion-row>
         <!-- <ion-row class="ion-justify-content-center"> 
           <ion-button>Walk more </ion-button>
@@ -29,6 +29,16 @@
             background: url('../images/EventsPage.png') no-repeat center center / cover;
         }
       }
+      .join-an-event{
+       position: absolute;
+       top: 80px;
+      //  width: 10%;
+       right: 20px;
+      //  height: 90px;
+       opacity:0%;
+       outline: none;
+       border-radius: 10px;
+     }
         
   </style> 
     <script lang="js">
